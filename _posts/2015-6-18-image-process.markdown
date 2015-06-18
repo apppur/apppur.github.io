@@ -27,13 +27,13 @@ categories: coding
 
 	interpolation：
 
-		* CV_INTER_NN - 最近邻差值
+	* CV_INTER_NN - 最近邻差值
 
-		* CV_INTER_LINEAR - 双线性差值 (缺省使用)
+	* CV_INTER_LINEAR - 双线性差值 (缺省使用)
 
-		* CV_INTER_AREA - 使用象素关系重采样。当图像缩小时候，该方法可以避免波纹出现。当图像放大时，类似于CV_INTER_NN
+	* CV_INTER_AREA - 使用象素关系重采样。当图像缩小时候，该方法可以避免波纹出现。当图像放大时，类似于CV_INTER_NN
 
-		* CV_INTER_CUBIC - 立方差值
+	* CV_INTER_CUBIC - 立方差值
 
 在对比几种插值算法与缩放因子产生的效果后，我们决定用CV_INTER_LINEAR算法与黄金分割点进行把.png图片统一缩小，然后游戏运行加载图片时，再用同样的方法把图片还原为原来的大小。这样可以把图片减小到原图片三分之一。
 运行效果，对于场景背景，还是可以接受的，但是UI、角色及动画已经无法让人接近，再加上opencv这样厚重的库，所以到此就放弃此方法啦。
