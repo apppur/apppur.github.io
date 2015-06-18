@@ -4,7 +4,7 @@ email: applepurplediandian@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://apppur.github.io" # the base hostname & protocol for your site
-twitter_username: apppur
+twitter_username: apppurme
 github_username:  apppur
 
 # Build settings
