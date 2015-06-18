@@ -9,15 +9,13 @@ categories: coding
 
 链接指示有两种形式：单个的和复合的。链接指示不能出现在类定义或函数定义的内部，它必须出现在函数的第一次声明上。
 
-```c
-// single statement linkage directive
-extern "C" size_t strlen(const char *);
-// compound statement linkage directive
-extern "C" {
-    int strcmp(const char *, const char *);
-    char *strcat(char *, const char *);
-}
-```
+	// single statement linkage directive
+	extern "C" size_t strlen(const char *);
+	// compound statement linkage directive
+	extern "C" {
+    	int strcmp(const char *, const char *);
+    	char *strcat(char *, const char *);
+	}
 
 ## 2.链接指示与头文件
 
