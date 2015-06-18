@@ -1,11 +1,11 @@
 # Site settings
-title: apporc's
-email: apporc@gmail.com
+title: apppur's
+email: applepurplediandian@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://apporc.github.io" # the base hostname & protocol for your site
-twitter_username: apporc
-github_username:  apporc
+url: "http://apppur.github.io" # the base hostname & protocol for your site
+twitter_username: apppur
+github_username:  apppur
 
 # Build settings
 markdown: kramdown
