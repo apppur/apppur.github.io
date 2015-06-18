@@ -1,6 +1,9 @@
-# 链接指示：extern "C"
-
-------
+---
+layout: post
+title:  "链接指示：extern "C""
+date:   2015-06-18 14:30
+categories: coding
+---
 
 ## 1.声明非C++函数
 
