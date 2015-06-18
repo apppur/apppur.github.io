@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "链接指示：extern "C""
+title:  链接指示：extern 'C'
 date:   2015-06-18 14:30
 categories: coding
 ---
