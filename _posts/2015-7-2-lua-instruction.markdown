@@ -18,55 +18,56 @@ categories: coding
 字段 A、B 和 C 通常引用寄存器编码(我将使用术语“寄存器”，因为它与处理器的寄存器相似)。虽然算术操作中字段A是目标操作数，但这个规则并非也适用于其他指令。寄存器通常是指向当前栈帧中的索引，0号寄存器是栈底位置。与 Lua C API 不同的是负索引(从栈顶开始计数)是不支持的。某些指令需要指定栈顶，则索引被编码为特定的操作数(通常是0)。局部变量等价于当前栈中的某个寄存器，但是也有允许读/写全局变量和upvalue的操作码。对某些指定字段B和C的值可能为寄存器或常量池中已编码的编号。
 
 ## 2. 指令集摘要
-| opcode | name 		| description 					|
-| ------ |:------------:| ------------------------------|
-| 0 	 | OP_MOVE 		| 在寄存器间拷贝值				|
-| 1 	 | OP_LOADK 	| 把一个常量载入寄存器 			|
-| 2 	 | OP_LOADKX 	| 								|
-| 3 	 | OP_LOADBOOL 	| 把一个布尔值载入寄存器 		|
-| 4 	 | OP_LOADNIL 	| 把nil载入一系列寄存器 		|
-| 5 	 | OP_GETUPVAL 	| 把一个upvalue读入寄存器 		|
-| 6 	 | OP_GETTABUP  | 								|
-| 7 	 | OP_GETTABLE 	| 把一个表元素读入寄存器 		|
-| 8  	 | OP_SETTABUP 	| 								|
-| 9 	 | OP_SETUPVAL 	| 								|
-| 10 	 | OP_SETTABLE 	| 								|
-| 11 	 | OP_NEWTABLE 	| R(A) = {} (size = B, C)		|
-| 12 	 | OP_SELF 		| 								|
-| 13 	 | OP_ADD 		| +								|
-| 14 	 | OP_SUB 		| -								|
-| 15 	 | OP_MUL 		| *								|
-| 16 	 | OP_MOD 		| %								|
-| 17 	 | OP_POW 		| ^ 							|
-| 18 	 | OP_DIV 		| / 							|
-| 19 	 | OP_IDIV 		| // 							|
-| 20 	 | OP_BAND 		| & 							|
-| 21 	 | OP_BOR 		| | 							|
-| 22 	 | OP_BXOR 		| ~ 							|
-| 23 	 | OP_SHL 		| << 							|
-| 24 	 | OP_SHR 		| >> 							|
-| 25 	 | OP_UNM 		| - 							|
-| 26 	 | OP_BNOT 		| ~ 							|
-| 27 	 | OP_NOT 		| not 							|
-| 28 	 | OP_LEN 		| length of R(B) 				|
-| 29 	 | OP_CONCAT 	| .. 							|
-| 30 	 | OP_JMP 		| 无条件跳转 					|
-| 31 	 | OP_EQ 		| 相等测试 						|
-| 32 	 | OP_LT 		| 小于测试 						|
-| 33 	 | OP_LE 		| 小于或等于测试 				|
-| 34 	 | OP_TEST 		| 布尔测试带条件跳转 			|
-| 35 	 | OP_TESTSET 	| 布尔测试带条件跳转和赋值 		|
-| 36 	 | OP_CALL 		| 调用闭包						|
-| 37 	 | OP_TAILCALL 	| 执行尾调用 					|
-| 38 	 | OP_RETURN 	| 函数返回 						|
-| 39 	 | OP_FORLOOP 	| 迭代 for 循环					|
-| 40 	 | OP_FORPREP 	| 初始化数字for循环 			|
-| 41 	 | OP_TFORCALL 	| 								|
-| 42 	 | OP_TFORLOOP 	| 迭代泛型for循环				|
-| 43 	 | OP_SETLIST 	| 设置表的一系列元素		 	|
-| 44 	 | OP_CLOSURE 	| 创建一个函数原型的闭包		|
-| 45 	 | OP_VARARG 	| 把可变参数量赋给寄存器 		|
-| 46 	 | OP_EXTRAARG 	| 								|
+
+| opcode | name 		| description 					 |
+| ------ |:------------:| ------------------------------ |
+| 0 	 | OP_MOVE 		| 在寄存器间拷贝值				 |
+| 1 	 | OP_LOADK 	| 把一个常量载入寄存器 			 |
+| 2 	 | OP_LOADKX 	| 								 |
+| 3 	 | OP_LOADBOOL 	| 把一个布尔值载入寄存器 		 |
+| 4 	 | OP_LOADNIL 	| 把nil载入一系列寄存器 		 |
+| 5 	 | OP_GETUPVAL 	| 把一个upvalue读入寄存器 		 |
+| 6 	 | OP_GETTABUP  | 								 |
+| 7 	 | OP_GETTABLE 	| 把一个表元素读入寄存器 		 |
+| 8  	 | OP_SETTABUP 	| 								 |
+| 9 	 | OP_SETUPVAL 	| 								 |
+| 10 	 | OP_SETTABLE 	| 								 |
+| 11 	 | OP_NEWTABLE 	| R(A) = {} (size = B, C)		 |
+| 12 	 | OP_SELF 		| 								 |
+| 13 	 | OP_ADD 		| +								 |
+| 14 	 | OP_SUB 		| -								 |
+| 15 	 | OP_MUL 		| *								 |
+| 16 	 | OP_MOD 		| %								 |
+| 17 	 | OP_POW 		| ^ 							 |
+| 18 	 | OP_DIV 		| / 							 |
+| 19 	 | OP_IDIV 		| // 							 |
+| 20 	 | OP_BAND 		| & 							 |
+| 21 	 | OP_BOR 		| | 							 |
+| 22 	 | OP_BXOR 		| ~ 							 |
+| 23 	 | OP_SHL 		| << 							 |
+| 24 	 | OP_SHR 		| >> 							 |
+| 25 	 | OP_UNM 		| - 							 |
+| 26 	 | OP_BNOT 		| ~ 							 |
+| 27 	 | OP_NOT 		| not 							 |
+| 28 	 | OP_LEN 		| length of R(B) 				 |
+| 29 	 | OP_CONCAT 	| .. 							 |
+| 30 	 | OP_JMP 		| 无条件跳转 					 |
+| 31 	 | OP_EQ 		| 相等测试 						 |
+| 32 	 | OP_LT 		| 小于测试 						 |
+| 33 	 | OP_LE 		| 小于或等于测试 				 |
+| 34 	 | OP_TEST 		| 布尔测试带条件跳转 			 |
+| 35 	 | OP_TESTSET 	| 布尔测试带条件跳转和赋值 		 |
+| 36 	 | OP_CALL 		| 调用闭包						 |
+| 37 	 | OP_TAILCALL 	| 执行尾调用 					 |
+| 38 	 | OP_RETURN 	| 函数返回 						 |
+| 39 	 | OP_FORLOOP 	| 迭代 for 循环					 |
+| 40 	 | OP_FORPREP 	| 初始化数字for循环 			 |
+| 41 	 | OP_TFORCALL 	| 								 |
+| 42 	 | OP_TFORLOOP 	| 迭代泛型for循环				 |
+| 43 	 | OP_SETLIST 	| 设置表的一系列元素		 	 |
+| 44 	 | OP_CLOSURE 	| 创建一个函数原型的闭包		 |
+| 45 	 | OP_VARARG 	| 把可变参数量赋给寄存器 		 |
+| 46 	 | OP_EXTRAARG 	| 								 |
 
 | Tables        | Are           | Cool  |
 | ------------- |:-------------:| -----:|
