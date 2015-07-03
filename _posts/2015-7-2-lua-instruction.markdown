@@ -68,8 +68,15 @@ categories: coding
 | 45 	 | OP_VARARG 	| 把可变参数量赋给寄存器 		|
 | 46 	 | OP_EXTRAARG 	| 								|
 
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
 ## 3. 详细说明：
-OP_MOVE: A B | R(A) := R(B) 将寄存器B中的值拷贝到寄存器A中
+OP_MOVE: A B | R(A) := R(B) 
+将寄存器B中的值拷贝到寄存器A中
 
 lua
 
@@ -85,7 +92,8 @@ vm
 在编译过程中，Lua会把每个local变量都分配一个指定的寄存器。在运行期间，Lua使用local变量所对应的寄存器ID来操作local变量，而local变量名仅仅提供DEBUG信息。
 如上：b被分配到register 0,a被分配到register 1。MOVE表示将b(register 0)的值赋给a(register 1)。
 
-OP_LOADK: A Bx | R(A) := Kst(Bx) 将Bx表示的常量表中的常量值装载到寄存器A中。有些指令本身可以直接从常量表中索引操作数，比如数学操作指令，所以可以不依赖LOADK指令。
+OP_LOADK: A Bx | R(A) := Kst(Bx)
+将Bx表示的常量表中的常量值装载到寄存器A中。有些指令本身可以直接从常量表中索引操作数，比如数学操作指令，所以可以不依赖LOADK指令。
 
 lua
 
@@ -98,7 +106,8 @@ vm
 	2	[2]	LOADK    	1 -2	; "hello world!"
 	3	[2]	RETURN   	0 1
 
-OP_LOADKX: A | R(A) := Kst(extra arg) LOADKX是lua5.2新加入的指令。当需要生成LOADK指令时，如果需要索引的常量id超出了Bx所能表示的有效范围，那么就生成一个LOADKX指令，取代LOADK指令，并且接下来立即生成一个EXTRAARG指令，并且用Ax来存放这个id。
+OP_LOADKX: A | R(A) := Kst(extra arg) LOADKX
+是lua5.2新加入的指令。当需要生成LOADK指令时，如果需要索引的常量id超出了Bx所能表示的有效范围，那么就生成一个LOADKX指令，取代LOADK指令，并且接下来立即生成一个EXTRAARG指令，并且用Ax来存放这个id。
 
 OP_LOADBOOL: A B C | R(A) = (Bool)B; if (C) pc++
 
@@ -117,7 +126,7 @@ C的作用比较特殊，下面通过lua中对逻辑和关系表达式处理来�
 lua
 
 	local a = 1 < 2
-	
+
 vm
 
 	1	[1]	LT       	1 -1 -2	; 1 2
