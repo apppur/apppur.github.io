@@ -19,8 +19,8 @@ categories: coding
 
 ## 2. 指令集摘要
 
-| opcode | name 		| description 					 |
-| ------ |:------------:| ------------------------------ |
+| opcode | name         | description                    |
+| ------ |:------------:| ------------------------------:|
 | 0 	 | OP_MOVE 		| 在寄存器间拷贝值				 |
 | 1 	 | OP_LOADK 	| 把一个常量载入寄存器 			 |
 | 2 	 | OP_LOADKX 	| 								 |
