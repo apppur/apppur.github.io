@@ -70,6 +70,7 @@ categories: coding
 
 ## 3. 详细说明：
 OP_MOVE: A B | R(A) := R(B) 将寄存器B中的值拷贝到寄存器A中
+
 lua
 	local b
 	local a = b
@@ -82,6 +83,7 @@ vm
 如上：b被分配到register 0,a被分配到register 1。MOVE表示将b(register 0)的值赋给a(register 1)。
 
 OP_LOADK: A Bx | R(A) := Kst(Bx) 将Bx表示的常量表中的常量值装载到寄存器A中。有些指令本身可以直接从常量表中索引操作数，比如数学操作指令，所以可以不依赖LOADK指令。
+
 lua
 	local a = 0x1111000
 	local b = "hello world!"
@@ -93,56 +95,80 @@ vm
 OP_LOADKX: A | R(A) := Kst(extra arg) LOADKX是lua5.2新加入的指令。当需要生成LOADK指令时，如果需要索引的常量id超出了Bx所能表示的有效范围，那么就生成一个LOADKX指令，取代LOADK指令，并且接下来立即生成一个EXTRAARG指令，并且用Ax来存放这个id。
 
 OP_LOADBOOL: A B C | R(A) = (Bool)B; if (C) pc++
+
 lua
 	local a = true
 vm
 	1	[1]	LOADBOOL 	0 1 0
 	2	[1]	RETURN   	0 1
+
 LOADBOOL将B所表示的boolean值装载到寄存器A中。B使用0和1分别代表false和true。C也表示一个boolean值，如果C为1，就跳过下一个指令。
 C的作用比较特殊，下面通过lua中对逻辑和关系表达式处理来看一下C的具体作用：
+
 lua
+
 	local a = 1 < 2
+
 vm
+
 	1	[1]	LT       	1 -1 -2	; 1 2
 	2	[1]	JMP      	0 1	; to 4
 	3	[1]	LOADBOOL 	0 0 1
 	4	[1]	LOADBOOL 	0 1 0
 	5	[1]	RETURN   	0 1
+
 lua生成了LT和JMP指令，另外再加上两个LOADBOOL对于a赋予不同的boolean值。LT指令本身并不产生一个boolean结果值，而是配合紧跟后面的JMP实现的true和false的不同跳转。如果LT评估为true，就继续执行也就是执行到JMP，然后跳转到4，对a赋予true；否则就跳过下一条指令到达第三行，对a赋予false,并且跳过下一个指令。所以上面的代码实际意思可以转化为：
+
 lua
+
 	local a;
 	if 1 < 2 then
 		a = true;
 	else
 		a = false;
 	end
+
 逻辑或者关系表达式之所以被设计成这个样子，主要是为if语句和循环语句所做的优化。不用将整个表达式估值成一个boolean值后再决定跳转路径，而是评估过程中就可以直接跳转，节省了很多指令。C的作用就是配合这种使用逻辑或关系表达式进行赋值的操作，他节省了后面必须跟的一个JMP指令。
 
 OP_LOADNIL: A B | R(A), R(A+1), ... R(A+B) := nil
+
 lua
+
 	local a, b, c, d
+
 vm
+
 	1	[1]	LOADNIL  	0 3
 	2	[1]	RETURN   	0 1
+
 LOADNIL将使用A到B所表示范围的寄存器赋值成nil。用范围表示寄存器主要为了对上述情况进行优化。对于连续的local变量声明，使用一条LOADNIL指令就可以完成，而不需要分别进行赋值。
 对于以下情况：
+
 lua
+
 	local a
 	local b = 1
 	local c
 	local d = 1
+
 vm
+
 	1	[1]	LOADNIL  	0 0
 	2	[2]	LOADK    	1 -1	; 1
 	3	[3]	LOADNIL  	2 0
 	4	[4]	LOADK    	3 -1	; 1
 	5	[4]	RETURN   	0 1
+
 在Lua5.2中，a和c不能被合并成一个LOADNIL指令。所以以上写法理论上会生成更多的指令，应该予以避免，而改写成
+
 lua
+
 	local a, c
 	local b = 1
 	local d = 1
+
 vm
+
 	1	[1]	LOADNIL  	0 1
 	2	[3]	LOADK    	2 -1	; 1
 	3	[4]	LOADK    	3 -1	; 1
