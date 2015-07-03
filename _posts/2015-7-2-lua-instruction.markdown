@@ -72,9 +72,12 @@ categories: coding
 OP_MOVE: A B | R(A) := R(B) 将寄存器B中的值拷贝到寄存器A中
 
 lua
+
 	local b
 	local a = b
+
 vm
+
 	1	[1]	LOADNIL  	0 0
 	2	[2]	MOVE     	1 0
 	3	[2]	RETURN   	0 1
@@ -85,9 +88,12 @@ vm
 OP_LOADK: A Bx | R(A) := Kst(Bx) 将Bx表示的常量表中的常量值装载到寄存器A中。有些指令本身可以直接从常量表中索引操作数，比如数学操作指令，所以可以不依赖LOADK指令。
 
 lua
+
 	local a = 0x1111000
 	local b = "hello world!"
+
 vm
+
 	1	[1]	LOADK    	0 -1	; 17895424
 	2	[2]	LOADK    	1 -2	; "hello world!"
 	3	[2]	RETURN   	0 1
@@ -97,8 +103,11 @@ OP_LOADKX: A | R(A) := Kst(extra arg) LOADKX是lua5.2新加入的指令。当需
 OP_LOADBOOL: A B C | R(A) = (Bool)B; if (C) pc++
 
 lua
+
 	local a = true
+
 vm
+
 	1	[1]	LOADBOOL 	0 1 0
 	2	[1]	RETURN   	0 1
 
@@ -108,7 +117,7 @@ C的作用比较特殊，下面通过lua中对逻辑和关系表达式处理来�
 lua
 
 	local a = 1 < 2
-
+	
 vm
 
 	1	[1]	LT       	1 -1 -2	; 1 2
