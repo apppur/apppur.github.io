@@ -20,7 +20,7 @@ categories: coding
 ## 2. 指令集摘要
 
 | opcode | name         | description                    |
-| ------ |:------------:| ------------------------------:|
+| ------ | ------------ | ------------------------------ |
 | 0 	 | OP_MOVE 		| 在寄存器间拷贝值				 |
 | 1 	 | OP_LOADK 	| 把一个常量载入寄存器 			 |
 | 2 	 | OP_LOADKX 	| 								 |
@@ -69,11 +69,6 @@ categories: coding
 | 45 	 | OP_VARARG 	| 把可变参数量赋给寄存器 		 |
 | 46 	 | OP_EXTRAARG 	| 								 |
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
 
 ## 3. 详细说明：
 OP_MOVE: A B | R(A) := R(B) 
