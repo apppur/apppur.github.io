@@ -71,7 +71,7 @@ categories: coding
 
 
 ## 3. 详细说明：
-OP_MOVE: A B | R(A) := R(B) 
+OP_MOVE: A B 	R(A) := R(B) 
 将寄存器B中的值拷贝到寄存器A中
 
 lua
@@ -88,7 +88,7 @@ vm
 在编译过程中，Lua会把每个local变量都分配一个指定的寄存器。在运行期间，Lua使用local变量所对应的寄存器ID来操作local变量，而local变量名仅仅提供DEBUG信息。
 如上：b被分配到register 0,a被分配到register 1。MOVE表示将b(register 0)的值赋给a(register 1)。
 
-OP_LOADK: A Bx | R(A) := Kst(Bx)
+OP_LOADK: A Bx 	R(A) := Kst(Bx)
 将Bx表示的常量表中的常量值装载到寄存器A中。有些指令本身可以直接从常量表中索引操作数，比如数学操作指令，所以可以不依赖LOADK指令。
 
 lua
@@ -102,10 +102,10 @@ vm
 	2	[2]	LOADK    	1 -2	; "hello world!"
 	3	[2]	RETURN   	0 1
 
-OP_LOADKX: A | R(A) := Kst(extra arg) LOADKX
+OP_LOADKX: A 	R(A) := Kst(extra arg) LOADKX
 是lua5.2新加入的指令。当需要生成LOADK指令时，如果需要索引的常量id超出了Bx所能表示的有效范围，那么就生成一个LOADKX指令，取代LOADK指令，并且接下来立即生成一个EXTRAARG指令，并且用Ax来存放这个id。
 
-OP_LOADBOOL: A B C | R(A) = (Bool)B; if (C) pc++
+OP_LOADBOOL: A B C 	R(A) = (Bool)B; if (C) pc++
 
 lua
 
@@ -144,7 +144,7 @@ lua
 
 逻辑或者关系表达式之所以被设计成这个样子，主要是为if语句和循环语句所做的优化。不用将整个表达式估值成一个boolean值后再决定跳转路径，而是评估过程中就可以直接跳转，节省了很多指令。C的作用就是配合这种使用逻辑或关系表达式进行赋值的操作，他节省了后面必须跟的一个JMP指令。
 
-OP_LOADNIL: A B | R(A), R(A+1), ... R(A+B) := nil
+OP_LOADNIL: A B 	R(A), R(A+1), ... R(A+B) := nil
 
 lua
 
@@ -200,13 +200,13 @@ local变量本身就存在于当前的register中，所有的指令都可以直�
 
 全局变量在lua5.1中也是使用专门的指令来操作，在lua5.2对这一点做了改变。lua5.2及以后版本没有对全局变量操作的指令，而是把全局表放在最外层函数的名字为“_ENV”的upvalue中。对于全局变量a，编译后为_ENV.a来进行访问。
 
-* OP_GETUPVAL: A B | R(A) := UpValue[B] GETUPVAL将B为索引的upvalue的值装载到A寄存器中。
+* OP_GETUPVAL: A B 		R(A) := UpValue[B] 	GETUPVAL将B为索引的upvalue的值装载到A寄存器中。
 
-* OP_SETUPVAL: A B | UpValue[B] := R(A) SETUPVAL将A寄存器的值保存到B为索引的upvalue中。
+* OP_SETUPVAL: A B 		UpValue[B] := R(A) 	SETUPVAL将A寄存器的值保存到B为索引的upvalue中。
 
-* OP_GETTABUP: A B C | R(A) := UpValue[B][RK(C)] GETTABUP将B为索引的upvalue当作一个table，并将C做为索引的寄存器或者常量当作key获取的值放入寄存器A。
+* OP_GETTABUP: A B C 	R(A) := UpValue[B][RK(C)] 	GETTABUP将B为索引的upvalue当作一个table，并将C做为索引的寄存器或者常量当作key获取的值放入寄存器A。
 
-* OP_SETTABUP: A B C | UpValue[A][RK(B)] := RK(C) SETTABUP将A为索引的upvalue当作一个table，将C寄存器或者常量的值以B寄存器或常量为key，存入table
+* OP_SETTABUP: A B C 	UpValue[A][RK(B)] := RK(C) 	SETTABUP将A为索引的upvalue当作一个table，将C寄存器或者常量的值以B寄存器或常量为key，存入table
 
 lua
 
