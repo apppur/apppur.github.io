@@ -289,6 +289,7 @@ lua
 	}
 
 vm
+
 	main <main.lua:0,0> (59 instructions at 0x112b590)
 	0+ params, 51 slots, 1 upvalue, 1 local, 10 constants, 0 functions
 		1	[1]	NEWTABLE 	0 30 0
