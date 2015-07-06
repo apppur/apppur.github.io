@@ -278,6 +278,7 @@ vm
 如果创建一个包含很多数组项元素的表，将数据放到寄存器时，就是会超出寄存器的范围。lua中的解决办法就是按照固定大小进行分批处理。每批的数量由在lopcodes.h中的LFIELDS_PER_FLUSH的宏控制，默认为50。因此，大量的数组元素就会按照50个一批，先将值设置到下面的寄存器，然后设置给对应的项。C代表的就是这一个调用SETLIST设置的是第几批。
 
 lua
+
 	local t = {
     	1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
     	1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
@@ -307,9 +308,11 @@ vm
 		57	[8]	LOADK    	5 -5	; 5
 		58	[8]	SETLIST  	0 5 2	; 2
 		59	[8]	RETURN   	0 1
+
 如果数据量超出了C的表示范围，那么C会被设置为0，然后在SETLIST指令后面生成一个EXTRAARG指令，并用Ax来存储批次。与LOADKX的处理方法类似，来为处理超大数据服务的。
 
 OP_GETTABL A B C R(A) := R(B)[RK(C)]
+
 OP_SETTABL A B C R(A)[RK(B)] := RK(C)
 
 GETTABLE使用C表示的key，将寄存器B中的表项值获取到寄存器A中。SETTABLE设置寄存器A的表的B项为C代表的值。
@@ -330,11 +333,17 @@ vm
 		4	[3]	RETURN   	0 1
 
 OP_ADD A B C R(A) := RK(B) + RK(C)
+
 OP_SUB A B C R(A) := RK(B) - RK(C)
+
 OP_MUL A B C R(A) := RK(B) * RK(C)
+
 OP_MOD A B C R(A) := RK(B) % RK(C)
+
 OP_POW A B C R(A) := RK(B) ^ RK(C)
+
 OP_DIV A B C R(A) := RK(B) / RK(C)
+
 OP_IDIV A B C R(A) := RK(B) // RK(C)
 
 lua
@@ -349,6 +358,7 @@ lua
 	v = v // 2
 
 vm
+
 	main <main.lua:0,0> (9 instructions at 0x773590)
 	0+ params, 2 slots, 1 upvalue, 1 local, 2 constants, 0 functions
 		1	[1]	LOADK    	0 -1	; 8
@@ -362,8 +372,11 @@ vm
 		9	[8]	RETURN   	0 1
 
 OP_BAND A B C R(A) := RK(B) & RK(C)
+
 OP_BOR A B C R(A) := RK(B) | RK(C)
+
 OP_BXOR A B C R(A) := RK(B) ~ RK(C)
+
 OP_BNOT A B R(A) := ~R(B)
 
 lua
@@ -386,6 +399,7 @@ vm
 		6	[5]	RETURN   	0 1
 
 OP_SHL A B C R(A) := RK(B) << RK(C)
+
 OP_SHR A B C R(A) := RK(B) >> RK(C)
 
 lua
@@ -404,6 +418,7 @@ vm
 		4	[3]	RETURN   	0 1
 
 OP_UNM A B R(A) := -R(B)
+
 OP_NOT A B R(A) := not R(B)
 
 lua
@@ -420,6 +435,7 @@ vm
 	4	[3]	RETURN   	0 1
 
 OP_LEN A B R(A) := length of R(B)
+
 LEN直接对应'#'操作符，返回B对象的长度，并保存到A中。
 
 lua
@@ -433,6 +449,7 @@ vm
 	3	[1]	RETURN   	0 1
 
 OP_CONCAT A B C R(A) := R(B).. ... ..R(C)
+
 字符串连接
 
 lua
