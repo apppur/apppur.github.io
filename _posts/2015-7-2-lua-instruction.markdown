@@ -6,7 +6,7 @@ categories: coding
 ---
 
 ## 1. Introduction
-本文讲解lua 5.3.1虚拟机指令。lua的指令具有固定的大小，缺省使用一个32bit无符号整型数据类型。当前lua 5.3.1使用4个指令类型和47个操作码(编号从0到47)。指令类型枚举为：iABC, iABx, iAsBx, iAx。每个操作码占用最初的6bits。指令可以有以下的域：
+本文讲解lua 5.3.1虚拟机指令。lua的指令具有固定的大小，缺省使用一个32bit无符号整型数据类型。当前lua 5.3.1使用4个指令类型和47个操作码(编号从0到46)。指令类型枚举为：iABC, iABx, iAsBx, iAx。每个操作码占用最初的6bits。指令可以有以下的域：
 
 	'A' : 8 bits
 	'B' : 9 bits
@@ -240,3 +240,212 @@ vm
 
 上述代码片断包括一个主函数和一个内嵌函数，根据变量规则，在内嵌函数中，l是local变量，u是upvalue，g既不是local，也不是upvalue，当作全局变量处理。
 在内嵌函数，首先LOADNIL为local变量赋值，然后用LOADK和SETUPVAL组合，完成 u = 1。1是一个常量，存在于常量表中，而lua没有常量与upvalue的直接操作指令，所以需要先把常量1装在到临时寄存器1种，然后将寄存器1的值赋给upvalue 0，也就是u。GETUPVAL将upvalue u赋给local变量l。SETTABUP和GETTABUP就是前面提到的对全局变量的处理了。g=1被转化为_ENV.g=1。_ENV是系统预先设置在主函数中的upvalue，所以对于全局变量g的访问被转化成对upvalue[_ENV][g]的访问。SETTABUP将upvalue 1(_ENV代表的upvalue)作为一个table，将常量表2（常量"g"）作为key的值设置为常量表1（常量1）；GETTABUP则是将upvalue 1作为table，将常量表2为key的值赋给寄存器0（local l）。
+
+OP_NEWTABLE: A B C R(A) := {} (size = B, C)
+
+lua
+
+	local t = {}
+
+vm
+
+	1	[1]	NEWTABLE 	0 0 0
+	2	[1]	RETURN   	0 1
+
+NEWTABLE在寄存器A处创建一个table对象。B和C分别用来存储这个table数组部分和hash部分的初始大小。初始大小是在编译期计算出来并生成到这个指令中的，目的是使接下来对table的初始化填充不会造成rehash而影响效率。B和C使用“floating point byte”的方法来表示成(eeeeexxx)的二进制形式，其实际值为(1xxx) * 2^(eeeee-1)。
+上面代码生成一个空的table，放入local变量t，B和C参数都为0。
+
+OP_SETLIST: A B C R(A)[(C-1)*FPF+i] := R(A+i), 1 <= i <= B
+SETLIST用来配合NEWTABLE，初始化表的数组部分使用的。A为保存待设置表的寄存器，SETLIST要将A下面紧接着的寄存器列表(1--B)中的值逐个设置给表的数组部分。
+
+lua
+
+	local t = {1, 2, 3, 4, 5}
+
+vm
+
+	1	[1]	NEWTABLE 	0 5 0
+	2	[1]	LOADK    	1 -1	; 1
+	3	[1]	LOADK    	2 -2	; 2
+	4	[1]	LOADK    	3 -3	; 3
+	5	[1]	LOADK    	4 -4	; 4
+	6	[1]	LOADK    	5 -5	; 5
+	7	[1]	SETLIST  	0 5 1	; 1
+	8	[1]	RETURN   	0 1
+
+第1行先用NEWTABLE构建一个具有5个数组元素的表，放到寄存器0中；然后使用5个LOADK向下面3个寄存器装入常量；最后使用SETLIST设置表的1~5为寄存器1~寄存器5。
+
+如果创建一个包含很多数组项元素的表，将数据放到寄存器时，就是会超出寄存器的范围。lua中的解决办法就是按照固定大小进行分批处理。每批的数量由在lopcodes.h中的LFIELDS_PER_FLUSH的宏控制，默认为50。因此，大量的数组元素就会按照50个一批，先将值设置到下面的寄存器，然后设置给对应的项。C代表的就是这一个调用SETLIST设置的是第几批。
+
+lua
+	local t = {
+    	1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+    	1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+    	1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+    	1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+    	1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+    	1, 2, 3, 4, 5,
+	}
+
+vm
+	main <main.lua:0,0> (59 instructions at 0x112b590)
+	0+ params, 51 slots, 1 upvalue, 1 local, 10 constants, 0 functions
+		1	[1]	NEWTABLE 	0 30 0
+		2	[2]	LOADK    	1 -1	; 1
+		3	[2]	LOADK    	2 -2	; 2
+		4	[2]	LOADK    	3 -3	; 3
+		5	[2]	LOADK    	4 -4	; 4
+		... ...
+		49	[6]	LOADK    	48 -8	; 8
+		50	[6]	LOADK    	49 -9	; 9
+		51	[6]	LOADK    	50 -10	; 0
+		52	[6]	SETLIST  	0 50 1	; 1
+		53	[7]	LOADK    	1 -1	; 1
+		54	[7]	LOADK    	2 -2	; 2
+		55	[7]	LOADK    	3 -3	; 3
+		56	[7]	LOADK    	4 -4	; 4
+		57	[8]	LOADK    	5 -5	; 5
+		58	[8]	SETLIST  	0 5 2	; 2
+		59	[8]	RETURN   	0 1
+如果数据量超出了C的表示范围，那么C会被设置为0，然后在SETLIST指令后面生成一个EXTRAARG指令，并用Ax来存储批次。与LOADKX的处理方法类似，来为处理超大数据服务的。
+
+OP_GETTABL A B C R(A) := R(B)[RK(C)]
+OP_SETTABL A B C R(A)[RK(B)] := RK(C)
+
+GETTABLE使用C表示的key，将寄存器B中的表项值获取到寄存器A中。SETTABLE设置寄存器A的表的B项为C代表的值。
+
+lua
+	
+	local t = {}
+	t.k = 1
+	local v = t.k
+
+vm
+
+	main <main.lua:0,0> (4 instructions at 0x24e3590)
+	0+ params, 2 slots, 1 upvalue, 2 locals, 2 constants, 0 functions
+		1	[1]	NEWTABLE 	0 0 0
+		2	[2]	SETTABLE 	0 -1 -2	; "k" 1
+		3	[3]	GETTABLE 	1 0 -1	; "k"
+		4	[3]	RETURN   	0 1
+
+OP_ADD A B C R(A) := RK(B) + RK(C)
+OP_SUB A B C R(A) := RK(B) - RK(C)
+OP_MUL A B C R(A) := RK(B) * RK(C)
+OP_MOD A B C R(A) := RK(B) % RK(C)
+OP_POW A B C R(A) := RK(B) ^ RK(C)
+OP_DIV A B C R(A) := RK(B) / RK(C)
+OP_IDIV A B C R(A) := RK(B) // RK(C)
+
+lua
+
+	local v = 8
+	v = v + 2
+	v = v - 2
+	v = v * 2
+	v = v % 2
+	v = v ^ 2
+	v = v / 2
+	v = v // 2
+
+vm
+	main <main.lua:0,0> (9 instructions at 0x773590)
+	0+ params, 2 slots, 1 upvalue, 1 local, 2 constants, 0 functions
+		1	[1]	LOADK    	0 -1	; 8
+		2	[2]	ADD      	0 0 -2	; - 2
+		3	[3]	SUB      	0 0 -2	; - 2
+		4	[4]	MUL      	0 0 -2	; - 2
+		5	[5]	MOD      	0 0 -2
+		6	[6]	POW      	0 0 -2	; - 2
+		7	[7]	DIV      	0 0 -2	; - 2
+		8	[8]	IDIV     	0 0 -2	; - 2
+		9	[8]	RETURN   	0 1
+
+OP_BAND A B C R(A) := RK(B) & RK(C)
+OP_BOR A B C R(A) := RK(B) | RK(C)
+OP_BXOR A B C R(A) := RK(B) ~ RK(C)
+OP_BNOT A B R(A) := ~R(B)
+
+lua
+
+	local v = 7
+	v = v & 8
+	v = v | 8
+	v = v ~ 8
+	v = ~ v
+
+vm
+
+	main <main.lua:0,0> (6 instructions at 0x1d54590)
+	0+ params, 2 slots, 1 upvalue, 1 local, 2 constants, 0 functions
+		1	[1]	LOADK    	0 -1	; 7
+		2	[2]	BAND     	0 0 -2	; - 8
+		3	[3]	BOR      	0 0 -2	; - 8
+		4	[4]	BXOR     	0 0 -2	; - 8
+		5	[5]	BNOT     	0 0
+		6	[5]	RETURN   	0 1
+
+OP_SHL A B C R(A) := RK(B) << RK(C)
+OP_SHR A B C R(A) := RK(B) >> RK(C)
+
+lua
+
+	local v = 7
+	v = v << 4
+	v = v >> 4
+
+vm
+
+	main <main.lua:0,0> (4 instructions at 0x18e4590)
+	0+ params, 2 slots, 1 upvalue, 1 local, 2 constants, 0 functions
+		1	[1]	LOADK    	0 -1	; 7
+		2	[2]	SHL      	0 0 -2	; - 4
+		3	[3]	SHR      	0 0 -2	; - 4
+		4	[3]	RETURN   	0 1
+
+OP_UNM A B R(A) := -R(B)
+OP_NOT A B R(A) := not R(B)
+
+lua
+	
+	local v = 7
+	v = -v
+	v = not v
+
+vm
+
+	1	[1]	LOADK    	0 -1	; 7
+	2	[2]	UNM      	0 0
+	3	[3]	NOT      	0 0
+	4	[3]	RETURN   	0 1
+
+OP_LEN A B R(A) := length of R(B)
+LEN直接对应'#'操作符，返回B对象的长度，并保存到A中。
+
+lua
+
+	local v = #"hello world"
+
+vm
+	
+	1	[1]	LOADK    	0 -1	; "hello world"
+	2	[1]	LEN      	0 0
+	3	[1]	RETURN   	0 1
+
+OP_CONCAT A B C R(A) := R(B).. ... ..R(C)
+字符串连接
+
+lua
+	
+	local greed = "welcome to "
+	local name = "applepurple"
+	local v = greed .. name
+
+vm 
+
+	1	[1]	LOADK    	0 -1	; "welcome to "
+	2	[2]	LOADK    	1 -2	; "applepurple"
+	3	[3]	MOVE     	2 0
+	4	[3]	MOVE     	3 1
+	5	[3]	CONCAT   	2 2 3
+	6	[3]	RETURN   	0 1
