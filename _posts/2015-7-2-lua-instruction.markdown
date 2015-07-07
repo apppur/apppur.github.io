@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  lua instruction (Unfinished)
-date:   2015-07-02 11:00
+title:  lua instruction
+date:   2015-07-07 11:00
 categories: coding
 ---
 
