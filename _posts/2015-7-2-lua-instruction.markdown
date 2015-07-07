@@ -467,3 +467,162 @@ vm
 	4	[3]	MOVE     	3 1
 	5	[3]	CONCAT   	2 2 3
 	6	[3]	RETURN   	0 1
+
+OP_CALL A B C R(A), ... , R(A+C-2) := R(A)(R(A+1), ... ,R(A+B-1))
+
+OP_CALL执行一个函数调用。寄存器A中存放函数对象，所有的参数按顺序放置在A后面的寄存器中。B-1表示参数的个数。如果参数列表最后一个表达式是变长的，则B设置为0，表示使用A+1到当前栈顶作为参数。函数返回值会按照顺序放在从寄存器A开始的C-1个寄存器中。如果C为0，表示返回值个数由函数决定。
+
+lua
+
+	foo(1, 2)
+
+vm
+
+	1	[1]	GETTABUP 	0 0 -1	; _ENV "foo"
+	2	[1]	LOADK    	1 -2	; 1
+	3	[1]	LOADK    	2 -3	; 2
+	4	[1]	CALL     	0 3 1
+	5	[1]	RETURN   	0 1
+
+lua
+
+	local t = {foo(...)}
+
+vm
+
+	1	[1]	NEWTABLE 	0 0 0
+	2	[1]	GETTABUP 	1 0 -1	; _ENV "foo"
+	3	[1]	VARARG   	2 0
+	4	[1]	CALL     	1 0 0
+	5	[1]	SETLIST  	0 0 1	; 1
+	6	[1]	RETURN   	0 1
+
+第四行CALL 1 0 0中，B为0表示函数参数是变长的，C为0表示构造会接受函数所有的函数值。
+
+OP_TAILCALL A B C RETURN R(A)(R(A+1), ... ,R(A+B-1))
+
+如果return statement只有一个函数调用表达式，这个函数调用指令CALL会被改为TAILCALL指令。TAILCALL不会为要调用的函数增加调用堆栈的深度，而是直接使用当前调用信息。ABC操作数与CALL的意思一样，不过C永远都是0。TAILCALL在执行过程中，只对lua closure进行tail call处理，对于c closure，其实与CALL没什么区别。
+
+lua
+
+	return foo(1, 2)
+
+vm
+
+	1	[1]	GETTABUP 	0 0 -1	; _ENV "foo"
+	2	[1]	LOADK    	1 -2	; 1
+	3	[1]	LOADK    	2 -3	; 2
+	4	[1]	TAILCALL 	0 3 0
+	5	[1]	RETURN   	0 0
+	6	[1]	RETURN   	0 1
+
+如果f是一个lua closure，那么执行到第四行后，此函数就会返回了，不会执行到后面第五行的RETURN。如果f是一个c closure，那就和CALL一样调用这个函数，然后依赖第五行的RETURN返回。这就是为什么TAILCALL后面还会己跟着生成一个RETURN的原因。
+
+OP_RETURN A B return R(A), ... ,R(A+B-2)
+
+RETURE将返回结果存放到寄存器A到寄存器A＋B－2中。如果返回的为变长表达式，则B会被设置为0，表示将寄存器A到当前栈顶的所有值返回。
+
+lua
+
+	return 0
+
+vm
+
+	1	[1]	LOADK    	0 -1	; 0
+	2	[1]	RETURN   	0 2
+	3	[1]	RETURN   	0 1
+
+RETURN只能从寄存器返回数据，所以第一行LOADK先将常量1装载道寄存器0，然后返回。
+
+lua
+
+	return ...
+
+vm
+
+	1	[1]	VARARG   	0 0
+	2	[1]	RETURN   	0 0
+	3	[1]	RETURN   	0 1
+
+变量表达式时，B为0。
+
+OP_CLOSURE A B R(A) := closure(KPROTO[Bx])
+
+CLOSURE为指定的函数prototype创建一个closure，并将这个closure保存到寄存器A中。Bx用来指定函数prototype的id。
+
+lua
+
+	local function foo()
+	end
+
+vm
+
+	main <main.lua:0,0> (2 instructions at 0x13f8590)
+	0+ params, 2 slots, 1 upvalue, 1 local, 0 constants, 1 function
+		1	[2]	CLOSURE  	0 0	; 0x13f87d0
+		2	[2]	RETURN   	0 1
+
+	function <main.lua:1,2> (1 instruction at 0x13f87d0)
+	0 params, 2 slots, 0 upvalues, 0 locals, 0 constants, 0 functions
+		1	[2]	RETURN   	0 1
+
+上面生成了一个主函数和一个子函数，CLOSURE将为这个索引为0的子函数生成一个closure，并保存到寄存器0中。
+
+OP_VARARG A B R(A), R(A+1), ..., R(A+B-2) = vararg
+
+VARARG直接对应'...'运算符。VARARG拷贝B-1个参数到从A开始的寄存器中，如果不足，使用nil补充。如果B为0，表示拷贝实际的参数数量。
+
+lua
+
+	local v = ...
+
+vm
+
+	1	[1]	VARARG   	0 2
+	2	[1]	RETURN   	0 1
+
+第一行表示拷贝B-1个，也就是1个变长参数到寄存器0,也就是local a中
+
+lua
+
+	foo(...)
+
+vm
+
+	1	[1]	GETTABUP 	0 0 -1	; _ENV "foo"
+	2	[1]	VARARG   	1 0
+	3	[1]	CALL     	0 0 1
+	4	[1]	RETURN   	0 1
+
+由于函数调用最后一个参数可以接受不定数量的参数，所以第二行生成的VARARG的B参数为0。
+
+OP_SELF A B C R(A+1) := R(B); R(A) := R(B)[RK(C)]
+
+SELF是专门为“:”运算符准备的指令。从寄存器B表示的table中，获取出C作为key的closure，存入寄存器A中，然后将table本身存入到寄存器A＋1中，为接下来调用这个closure做准备。
+
+lua
+
+	t:foo()
+
+vm
+
+	1	[1]	GETTABUP 	0 0 -1	; _ENV "t"
+	2	[1]	SELF     	0 0 -2	; "foo"
+	3	[1]	CALL     	0 2 1
+	4	[1]	RETURN   	0 1
+
+下面是与之等价的语法：
+
+lua
+
+	t.foo(t)
+
+vm
+
+	1	[1]	GETTABUP 	0 0 -1	; _ENV "t"
+	2	[1]	GETTABLE 	0 0 -2	; "foo"
+	3	[1]	GETTABUP 	1 0 -1	; _ENV "t"
+	4	[1]	CALL     	0 2 1
+	5	[1]	RETURN   	0 1
+
+比使用":"操作符多使用了一个指令。所以，如果需要使用这种面向对象调用的语义时，应该尽量使用":"。
