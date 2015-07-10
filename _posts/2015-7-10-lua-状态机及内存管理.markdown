@@ -124,8 +124,8 @@ global_State对于lua使用者是不可见的，无法用公开的API取到它�
 	** thread state + extra space
 	*/
 	typedef struct LX {
-  		lu_byte extra_[LUA_EXTRASPACE];
-  		lua_State l;
+  	lu_byte extra_[LUA_EXTRASPACE];
+  	lua_State l;
 	} LX;
 
 
@@ -133,8 +133,8 @@ global_State对于lua使用者是不可见的，无法用公开的API取到它�
 	** Main thread combines a thread state and the global state
 	*/
 	typedef struct LG {
-  		LX l;
-  		global_State g;
+  	LX l;
+  	global_State g;
 	} LG;
 
 lua_newstate初始化所有global_State中将引用的数据。lua_newstate()利用用户传进来的内存分配器分配主线程和global_State的内存，然后把内存分配器赋给global_State的frealloc来管理虚拟机内在的所有内存。把主线程和global_State关联上以及处理GC等相关的初始化。下面看一下它的具体实现：
