@@ -16,21 +16,21 @@ Lua虚拟机之间的工作是线程安装的，因为一切和虚拟机相关�
 来直接创建一个虚拟机。其实这样创建虚拟机，传入虚拟机的内存管理函数是C标准库的内存管理函数，具体如下：
 
 	lua_State *luaL_newstate (void) {
-  		lua_State *L = lua_newstate(l_alloc, NULL);
-  		if (L) lua_atpanic(L, &panic);
-  		return L;
+  	lua_State *L = lua_newstate(l_alloc, NULL);
+  	if (L) lua_atpanic(L, &panic);
+  	return L;
 	}
 
 luaL_newstate其实是利用lua_newstate实现的，传给lua_newstate的内存管理器这l_alloc，而l_alloc的实现如果：
 
 	static void *l_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
-  		(void)ud; (void)osize;  /* not used */
-  		if (nsize == 0) {
-    		free(ptr);
-    		return NULL;
-  		}
-  		else
-    		return realloc(ptr, nsize);
+  	(void)ud; (void)osize;  /* not used */
+  	if (nsize == 0) {
+    	free(ptr);
+    	return NULL;
+  	}
+  	else
+    return realloc(ptr, nsize);
 	}
 
 l_alloc是利用C标准库的realloc和free来实现的内存管理器。在这里，用户可以用自己的管理器来代替默认的内存管理器。l_alloc功能上类似于C标准库的realloc，但是当时nsize为0时，提供释放内存的功能。这个内存管理接口接受额外的一个指针ud，这可以让内存管理模块工作在不同的堆上。
@@ -95,21 +95,21 @@ lua使用一组宏来管理单个对象、数组、可变长数组等不同类�
 luaM_realloc_调用保存在global_State中的内存管理器来管理内存。主要工作包括分配新的内存、释放不用的内存、扩展不够用的内存，还有通过realloc试图释放掉申请过大的内存的后半部分（取决于用户提供的内存管理器能不能缩小内存块）。
 
 	void *luaM_growaux_ (lua_State *L, void *block, int *size, size_t size_elems, int limit, const char *what) {
-  		void *newblock;
-  		int newsize;
-  		if (*size >= limit/2) {  /* cannot double it? */
-    		if (*size >= limit)  /* cannot grow even a little? */
-      			luaG_runerror(L, "too many %s (limit is %d)", what, limit);
-    		newsize = limit;  /* still have at least one free place */
-  		}
-  		else {
-    		newsize = (*size)*2;
-    		if (newsize < MINSIZEARRAY)
-      		newsize = MINSIZEARRAY;  /* minimum size */
-  		}
-  		newblock = luaM_reallocv(L, block, *size, newsize, size_elems);
-  		*size = newsize;  /* update only when everything else is OK */
-  		return newblock;
+  	void *newblock;
+  	int newsize;
+  	if (*size >= limit/2) {  /* cannot double it? */
+    	if (*size >= limit)  /* cannot grow even a little? */
+      		luaG_runerror(L, "too many %s (limit is %d)", what, limit);
+    	newsize = limit;  /* still have at least one free place */
+  	}
+  	else {
+    	newsize = (*size)*2;
+    	if (newsize < MINSIZEARRAY)
+      	newsize = MINSIZEARRAY;  /* minimum size */
+  	}
+  	newblock = luaM_reallocv(L, block, *size, newsize, size_elems);
+  	*size = newsize;  /* update only when everything else is OK */
+  	return newblock;
 	}
 
 luaM_growaux_是用来管理可变长数组的。其主要策略是当数组空间不够时，扩大为原来的两倍。
@@ -140,49 +140,49 @@ global_State对于lua使用者是不可见的，无法用公开的API取到它�
 lua_newstate初始化所有global_State中将引用的数据。lua_newstate()利用用户传进来的内存分配器分配主线程和global_State的内存，然后把内存分配器赋给global_State的frealloc来管理虚拟机内在的所有内存。把主线程和global_State关联上以及处理GC等相关的初始化。下面看一下它的具体实现：
 
 	lua_State *lua_newstate (lua_Alloc f, void *ud) {
-  		int i;
-  		lua_State *L;
-  		global_State *g;
-  		LG *l = cast(LG *, (*f)(ud, NULL, LUA_TTHREAD, sizeof(LG)));
-  		if (l == NULL) return NULL;
-  		L = &l->l.l;
-  		g = &l->g;
-  		L->next = NULL;
- 		L->tt = LUA_TTHREAD;
-  		g->currentwhite = bitmask(WHITE0BIT);
-  		L->marked = luaC_white(g);
-  		preinit_thread(L, g);
-  		g->frealloc = f;
-  		g->ud = ud;
-  		g->mainthread = L;
-  		g->seed = makeseed(L);
-  		g->gcrunning = 0;  /* no GC while building state */
-  		g->GCestimate = 0;
-  		g->strt.size = g->strt.nuse = 0;
-  		g->strt.hash = NULL;
-  		setnilvalue(&g->l_registry);
-  		luaZ_initbuffer(L, &g->buff);
-  		g->panic = NULL;
-  		g->version = NULL;
-  		g->gcstate = GCSpause;
-  		g->gckind = KGC_NORMAL;
-  		g->allgc = g->finobj = g->tobefnz = g->fixedgc = NULL;
-  		g->sweepgc = NULL;
-  		g->gray = g->grayagain = NULL;
-  		g->weak = g->ephemeron = g->allweak = NULL;
-  		g->twups = NULL;
-  		g->totalbytes = sizeof(LG);
-  		g->GCdebt = 0;
-  		g->gcfinnum = 0;
-  		g->gcpause = LUAI_GCPAUSE;
-  		g->gcstepmul = LUAI_GCMUL;
-  		for (i=0; i < LUA_NUMTAGS; i++) g->mt[i] = NULL;
-  		if (luaD_rawrunprotected(L, f_luaopen, NULL) != LUA_OK) {
-    		/* memory allocation error: free partial state */
-    		close_state(L);
-    		L = NULL;
-  		}
-  		return L;
+  	int i;
+  	lua_State *L;
+  	global_State *g;
+  	LG *l = cast(LG *, (*f)(ud, NULL, LUA_TTHREAD, sizeof(LG)));
+  	if (l == NULL) return NULL;
+  	L = &l->l.l;
+  	g = &l->g;
+  	L->next = NULL;
+ 	L->tt = LUA_TTHREAD;
+  	g->currentwhite = bitmask(WHITE0BIT);
+  	L->marked = luaC_white(g);
+  	preinit_thread(L, g);
+  	g->frealloc = f;
+  	g->ud = ud;
+  	g->mainthread = L;
+  	g->seed = makeseed(L);
+  	g->gcrunning = 0;  /* no GC while building state */
+  	g->GCestimate = 0;
+  	g->strt.size = g->strt.nuse = 0;
+  	g->strt.hash = NULL;
+  	setnilvalue(&g->l_registry);
+  	luaZ_initbuffer(L, &g->buff);
+  	g->panic = NULL;
+  	g->version = NULL;
+  	g->gcstate = GCSpause;
+  	g->gckind = KGC_NORMAL;
+  	g->allgc = g->finobj = g->tobefnz = g->fixedgc = NULL;
+  	g->sweepgc = NULL;
+  	g->gray = g->grayagain = NULL;
+  	g->weak = g->ephemeron = g->allweak = NULL;
+  	g->twups = NULL;
+  	g->totalbytes = sizeof(LG);
+  	g->GCdebt = 0;
+  	g->gcfinnum = 0;
+  	g->gcpause = LUAI_GCPAUSE;
+  	g->gcstepmul = LUAI_GCMUL;
+  	for (i=0; i < LUA_NUMTAGS; i++) g->mt[i] = NULL;
+  	if (luaD_rawrunprotected(L, f_luaopen, NULL) != LUA_OK) {
+    	/* memory allocation error: free partial state */
+    	close_state(L);
+    	L = NULL;
+  	}
+  	return L;
 	}
 
 下面主要看f_luaopen()，此函数主要初始化了主线程的数据栈、初始化注册表、初始化字串表和字符串cache、初始化元表用的字符串、初始化词法分析用的token串等等。由于初始化中会分配内存，有可能会引起内存错误。在lua_newstate中把g->version = NULL，在f_luaopen()中把所有的初始化完成后，如果没有错误才给版本号赋值g->version = lua_version(NULL)。我们通过'g->version' != NULL来检测虚拟机是否正确建立起来。
@@ -192,14 +192,14 @@ lua_newstate初始化所有global_State中将引用的数据。lua_newstate()利
 	** ('g->version' != NULL flags that the state was completely build)
 	*/
 	static void f_luaopen (lua_State *L, void *ud) {
-		global_State *g = G(L);
-		UNUSED(ud);
-  		stack_init(L, L);  /* init stack */
-  		init_registry(L, g);
-  		luaS_init(L);
-  		luaT_init(L);
-  		luaX_init(L);
-  		g->gcrunning = 1;  /* allow gc */
-  		g->version = lua_version(NULL);
-  		luai_userstateopen(L);
+	global_State *g = G(L);
+	UNUSED(ud);
+  	stack_init(L, L);  /* init stack */
+  	init_registry(L, g);
+  	luaS_init(L);
+  	luaT_init(L);
+  	luaX_init(L);
+  	g->gcrunning = 1;  /* allow gc */
+  	g->version = lua_version(NULL);
+  	luai_userstateopen(L);
 	}
