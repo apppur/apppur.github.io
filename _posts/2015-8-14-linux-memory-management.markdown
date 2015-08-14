@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  linux 内存管理
-date:   2015-08-10 14:30
+date:   2015-08-14 14:30
 categories: coding
 ---
 
@@ -16,7 +16,7 @@ Linux操作系统采用虚拟内存管理技术，使得每个进程都有各自
 * 第三、每个进程的用户空间都是完全独立、互不相干的。
 
 
-![32 bit memory layout](/images/mem32.png)
+![32 bit memory layout](/images/mem32.png)	
 
 ###2.64位操作系统的进程虚拟地址布局如下：
 
@@ -106,11 +106,11 @@ Linux操作系统采用虚拟内存管理技术，使得每个进程都有各自
 	____________________________
 	Stack Location:
     	Initial end of stack:0xbfce4a9c
-       	new end of stack    :0xbfce4a98
+    	new end of stack    :0xbfce4a98
 	____________________________
 	Data Location:
     	Address of data_var(Data Segment):0x8049a98
-        New end of data_var(Data Segment):0x8049a9c
+    	New end of data_var(Data Segment):0x8049a9c
 	____________________________
 	BSS Location:
         Address of bss_var:0x8049aa8
