@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  JavaScript Basics
-date:   2016-1-1７ 00:00
+date:   2016-1-17 00:00
 categories: coding
 ---
 
