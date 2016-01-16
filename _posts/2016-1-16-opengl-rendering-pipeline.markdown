@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  OpenGL rendering pipeline
+title:  OpenGL Rendering Pipeline
 date:   2016-1-16 14:30
 categories: coding
 ---
