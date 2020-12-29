@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-12-29T14:26:05.599Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="6aAxW8qtwy9DrE5yep9g" version="14.1.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-29T14:31:01.084Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="Bz1aqfKOwMkn5MtmxgLb" version="14.1.2" type="github">
   <diagram name="Page-1" id="13e1069c-82ec-6db2-03f1-153e76fe0fe0">
-    <mxGraphModel dx="3470" dy="1177" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="3131" dy="1009" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -8,71 +8,80 @@
           <mxGeometry x="170" y="80" width="90" height="770" as="geometry" />
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-4" value="PAAS SDK1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="1" vertex="1">
-          <mxGeometry x="580" y="80" width="90" height="770" as="geometry" />
+          <mxGeometry x="513" y="80" width="90" height="770" as="geometry" />
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-27" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-4" vertex="1">
           <mxGeometry x="40" y="250" width="10" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="V6cwjawZBJKuY5wKBzn6-4" value="" style="endArrow=classic;html=1;" edge="1" parent="7baba1c4bc27f4b0-4" target="7baba1c4bc27f4b0-5">
+        <mxCell id="V6cwjawZBJKuY5wKBzn6-4" value="" style="endArrow=classic;html=1;entryX=-0.286;entryY=0.742;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="7baba1c4bc27f4b0-4" target="7YiKMo0v-y7mLt2C8tXS-12">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="50" y="302" as="sourcePoint" />
             <mxPoint x="220" y="302" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-5" value="PAAS SERVER" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="1" vertex="1">
-          <mxGeometry x="770" y="80" width="90" height="770" as="geometry" />
+          <mxGeometry x="703" y="80" width="90" height="770" as="geometry" />
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-19" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-5" vertex="1">
-          <mxGeometry x="41" y="446" width="10" height="120" as="geometry" />
+          <mxGeometry x="40" y="498" width="10" height="120" as="geometry" />
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-12" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-5" vertex="1">
-          <mxGeometry x="40" y="80" width="10" height="280" as="geometry" />
+          <mxGeometry x="40" y="80" width="10" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="7YiKMo0v-y7mLt2C8tXS-61" value="如果有房间就即刻返回&lt;br&gt;没有就按照规则向PAAS server发起创建房间" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" parent="7baba1c4bc27f4b0-5" edge="1" source="7YiKMo0v-y7mLt2C8tXS-34">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-351.5" y="107.98000000000002" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="27" y="107" />
+            </Array>
+            <mxPoint x="41" y="107" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-8" value="App1" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="1" vertex="1">
-          <mxGeometry x="-40" y="80" width="90" height="760" as="geometry" />
+          <mxGeometry x="-1" y="80" width="90" height="760" as="geometry" />
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-9" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-8" vertex="1">
-          <mxGeometry x="40" y="60" width="10" height="260" as="geometry" />
+          <mxGeometry x="40" y="60" width="10" height="320" as="geometry" />
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-28" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7baba1c4bc27f4b0-8" vertex="1">
-          <mxGeometry x="40" y="446" width="10" height="144" as="geometry" />
+          <mxGeometry x="40" y="488" width="10" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="7baba1c4bc27f4b0-11" value="客户端选择进入一个已有的全局房间" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.5;exitY=0.068;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+        <mxCell id="7baba1c4bc27f4b0-11" value="客户端选择进入一个已有的全局房间" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="14" y="379.99999999999994" as="sourcePoint" />
-            <mxPoint x="614" y="380" as="targetPoint" />
+            <mxPoint x="50" y="378" as="sourcePoint" />
+            <mxPoint x="553" y="378" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="614" y="380" />
-              <mxPoint x="139" y="380.08" />
-              <mxPoint x="149" y="410.08" />
+              <mxPoint x="553" y="378" />
+              <mxPoint x="78" y="378.08" />
+              <mxPoint x="88" y="408.08" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-40" value="游戏客户端" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
-          <mxGeometry x="-40" y="30" width="100" height="35" as="geometry" />
+          <mxGeometry x="-1" y="30" width="100" height="35" as="geometry" />
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-42" value="业务游戏服务器" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
           <mxGeometry x="170" y="30" width="100" height="35" as="geometry" />
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-43" value="PAAS SDK" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
-          <mxGeometry x="575" y="30" width="100" height="35" as="geometry" />
+          <mxGeometry x="508" y="30" width="100" height="35" as="geometry" />
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-44" value="PAAS &lt;br&gt;SERVER" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
-          <mxGeometry x="765" y="30" width="100" height="35" as="geometry" />
+          <mxGeometry x="698" y="30" width="100" height="35" as="geometry" />
         </mxCell>
-        <mxCell id="7YiKMo0v-y7mLt2C8tXS-29" value="APP1发起消息" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.5;exitY=0.2;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+        <mxCell id="7YiKMo0v-y7mLt2C8tXS-29" value="APP1发起消息" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="16" y="560.5" as="sourcePoint" />
+            <mxPoint x="50" y="597" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="360" y="560.5" />
+              <mxPoint x="360" y="596.5" />
             </Array>
-            <mxPoint x="623" y="560.5" as="targetPoint" />
+            <mxPoint x="550" y="597" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-32" value="APP1展示自己发起的消息" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="622" y="624" as="sourcePoint" />
-            <mxPoint x="12.5" y="624" as="targetPoint" />
+            <mxPoint x="550" y="666" as="sourcePoint" />
+            <mxPoint x="50" y="666" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
@@ -87,8 +96,8 @@
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-54" value="SDK1返回服务器确认APP1消息" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="810" y="616" as="sourcePoint" />
-            <mxPoint x="636" y="616" as="targetPoint" />
+            <mxPoint x="743" y="654" as="sourcePoint" />
+            <mxPoint x="569" y="654" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
@@ -112,16 +121,9 @@
             <mxPoint x="1" y="-9.08" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="7YiKMo0v-y7mLt2C8tXS-61" value="如果有房间就即刻返回，没有就按照规则向PAAS server发起创建房间" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=1.1;exitY=0.846;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="419" y="194.98000000000002" as="sourcePoint" />
-            <Array as="points" />
-            <mxPoint x="811.5" y="194" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-62" value="返回创建房间成功" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="808" y="222" as="sourcePoint" />
+            <mxPoint x="740" y="222" as="sourcePoint" />
             <mxPoint x="420" y="222" as="targetPoint" />
             <Array as="points">
               <mxPoint x="700" y="222" />
@@ -131,7 +133,7 @@
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-63" value="返回全局房间服务器列表" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;exitX=0.2;exitY=0.585;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="207" y="280" as="sourcePoint" />
-            <mxPoint x="10" y="280" as="targetPoint" />
+            <mxPoint x="50" y="280" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
@@ -145,88 +147,88 @@
         <mxCell id="7baba1c4bc27f4b0-13" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="1" vertex="1">
           <mxGeometry x="210" y="155" width="10" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="V6cwjawZBJKuY5wKBzn6-1" value="" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.5;exitY=0.068;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+        <mxCell id="V6cwjawZBJKuY5wKBzn6-1" value="" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="10" y="183" as="sourcePoint" />
+            <mxPoint x="50" y="183" as="sourcePoint" />
             <mxPoint x="210" y="183" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="V6cwjawZBJKuY5wKBzn6-2" value="客户端获取全局房间服务器列表" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V6cwjawZBJKuY5wKBzn6-1">
+        <mxCell id="V6cwjawZBJKuY5wKBzn6-2" value="客户端获取&lt;br&gt;全局房间服务器列表" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V6cwjawZBJKuY5wKBzn6-1">
           <mxGeometry x="-0.1276" y="1" relative="1" as="geometry">
-            <mxPoint x="1" y="-11.08" as="offset" />
+            <mxPoint x="9" y="-15.08" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-6" value="SDK1发起消息" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" edge="1" parent="1">
           <mxGeometry x="0.0556" relative="1" as="geometry">
-            <mxPoint x="635" y="568" as="sourcePoint" />
+            <mxPoint x="568" y="606" as="sourcePoint" />
             <Array as="points" />
-            <mxPoint x="810" y="568" as="targetPoint" />
+            <mxPoint x="740" y="606" as="targetPoint" />
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-7" value="同意或者拒绝进入全局房间" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" edge="1" parent="1">
           <mxGeometry x="0.0244" relative="1" as="geometry">
-            <mxPoint x="810" y="428" as="sourcePoint" />
+            <mxPoint x="743" y="428" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="670" y="428" />
-              <mxPoint x="650" y="418" />
-              <mxPoint x="640" y="408" />
-              <mxPoint x="650" y="418" />
-              <mxPoint x="640" y="418" />
-              <mxPoint x="690" y="418" />
-              <mxPoint x="670" y="398" />
-              <mxPoint x="804" y="428" />
+              <mxPoint x="603" y="428" />
+              <mxPoint x="583" y="418" />
+              <mxPoint x="573" y="408" />
+              <mxPoint x="583" y="418" />
+              <mxPoint x="573" y="418" />
+              <mxPoint x="623" y="418" />
+              <mxPoint x="603" y="398" />
+              <mxPoint x="737" y="428" />
             </Array>
-            <mxPoint x="630" y="428" as="targetPoint" />
+            <mxPoint x="563" y="428" as="targetPoint" />
             <mxPoint x="1" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-8" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
-          <mxGeometry x="620" y="538" width="10" height="140" as="geometry" />
+          <mxGeometry x="553" y="576" width="10" height="140" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-11" value="游戏客户端&lt;br&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" vertex="1" parent="1">
-          <mxGeometry x="1068" y="30" width="100" height="35" as="geometry" />
+          <mxGeometry x="1001" y="30" width="100" height="35" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-12" value="App2" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
-          <mxGeometry x="1068" y="80" width="90" height="760" as="geometry" />
+          <mxGeometry x="1001" y="80" width="90" height="760" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-14" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="V6cwjawZBJKuY5wKBzn6-12">
-          <mxGeometry x="40" y="446" width="10" height="120" as="geometry" />
+          <mxGeometry x="40" y="492" width="10" height="120" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-15" value="PAAS SDK" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" vertex="1" parent="1">
-          <mxGeometry x="919" y="30" width="100" height="35" as="geometry" />
+          <mxGeometry x="852" y="30" width="100" height="35" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-16" value="PAAS SDK2" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="1">
-          <mxGeometry x="919" y="80" width="90" height="770" as="geometry" />
+          <mxGeometry x="852" y="80" width="90" height="770" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-19" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" vertex="1" parent="V6cwjawZBJKuY5wKBzn6-16">
-          <mxGeometry x="40" y="448" width="10" height="120" as="geometry" />
+          <mxGeometry x="40" y="498" width="10" height="108" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-21" value="SDK2收到APP1消息" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" edge="1" parent="V6cwjawZBJKuY5wKBzn6-16">
           <mxGeometry x="-0.0769" y="6" relative="1" as="geometry">
-            <mxPoint x="-98" y="506" as="sourcePoint" />
+            <mxPoint x="-98" y="544" as="sourcePoint" />
             <Array as="points" />
-            <mxPoint x="32" y="506" as="targetPoint" />
+            <mxPoint x="32" y="544" as="targetPoint" />
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-22" value="APP2展示APP1消息" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;" edge="1" parent="1" target="V6cwjawZBJKuY5wKBzn6-14">
           <mxGeometry y="6" relative="1" as="geometry">
-            <mxPoint x="981" y="592" as="sourcePoint" />
+            <mxPoint x="914" y="630" as="sourcePoint" />
             <Array as="points">
-              <mxPoint x="971" y="592" />
-              <mxPoint x="1101" y="592" />
+              <mxPoint x="904" y="630" />
+              <mxPoint x="1034" y="630" />
             </Array>
-            <mxPoint x="981" y="592" as="targetPoint" />
+            <mxPoint x="914" y="630" as="targetPoint" />
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-25" value="SDK向服务器发起进入全局房间" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
-          <mxGeometry x="628" y="358" width="180" height="20" as="geometry" />
+          <mxGeometry x="561" y="358" width="180" height="20" as="geometry" />
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-26" value="备注：对于APP1和APP2通信来说，进入的是世界房间还是业务游戏内的房间本身并不关心，只是一个房间id而已，仅说明消息转发路径" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
-          <mxGeometry x="156" y="719" width="730" height="20" as="geometry" />
+          <mxGeometry x="156" y="757" width="730" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
