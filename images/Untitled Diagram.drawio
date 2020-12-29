@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-29T14:20:12.831Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="8BYw9PGzqpJ5BUrxT_pS" version="14.1.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-29T14:22:22.678Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="6q_dHvEgNk0l1O3lZYoK" version="14.1.2" type="github">
   <diagram name="Page-1" id="13e1069c-82ec-6db2-03f1-153e76fe0fe0">
     <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
       <root>
@@ -223,6 +223,9 @@
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-25" value="SDK向服务器发起进入全局房间" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
           <mxGeometry x="717" y="358" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="V6cwjawZBJKuY5wKBzn6-26" value="备注：对于APP1和APP2通信来说，进入的是世界房间还是业务游戏内的房间本身并不关心，只是一个房间id而已，仅模拟消息转发路径" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
+          <mxGeometry x="245" y="719" width="730" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
