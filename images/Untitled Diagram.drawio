@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-29T13:58:47.436Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="6cBzfWRbDcntjlf44jnZ" version="14.1.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-29T14:00:20.331Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="7bQD5cLEAQ0oMNBJ4gJd" version="14.1.2" type="github">
   <diagram name="Page-1" id="13e1069c-82ec-6db2-03f1-153e76fe0fe0">
     <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#ffffff" math="0" shadow="0">
       <root>
@@ -98,7 +98,7 @@
           <mxGeometry x="45" y="560" width="10" height="90" as="geometry" />
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-56" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="7YiKMo0v-y7mLt2C8tXS-34" vertex="1">
-          <mxGeometry x="49" y="70" width="10" height="130" as="geometry" />
+          <mxGeometry x="46" y="70" width="10" height="130" as="geometry" />
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-37" value="全局房间&lt;br&gt;管理服务" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" parent="1" vertex="1">
           <mxGeometry x="500" y="30" width="100" height="35" as="geometry" />
@@ -148,15 +148,18 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="7YiKMo0v-y7mLt2C8tXS-59" value="" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.5;exitY=0.068;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" target="7YiKMo0v-y7mLt2C8tXS-34" edge="1" source="7baba1c4bc27f4b0-13">
+        <mxCell id="7YiKMo0v-y7mLt2C8tXS-59" value="" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.5;exitY=0.068;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="150" y="184" as="sourcePoint" />
-            <mxPoint x="354.5" y="184.07999999999993" as="targetPoint" />
+            <mxPoint x="355" y="179.91999999999996" as="sourcePoint" />
+            <mxPoint x="540" y="182" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="530" y="170" />
-              <mxPoint x="350" y="210" />
-              <mxPoint x="275" y="184.07999999999993" />
-              <mxPoint x="285" y="214.07999999999993" />
+              <mxPoint x="530" y="182" />
+              <mxPoint x="530" y="182" />
+              <mxPoint x="530" y="182" />
+              <mxPoint x="530" y="182" />
+              <mxPoint x="350" y="222" />
+              <mxPoint x="275" y="196.07999999999993" />
+              <mxPoint x="285" y="226.07999999999993" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -176,10 +179,10 @@
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-62" value="返回创建房间成功" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="948" y="221" as="sourcePoint" />
-            <mxPoint x="560" y="221" as="targetPoint" />
+            <mxPoint x="948" y="222" as="sourcePoint" />
+            <mxPoint x="560" y="222" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="840" y="221" />
+              <mxPoint x="840" y="222" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -199,24 +202,24 @@
         </mxCell>
         <mxCell id="7YiKMo0v-y7mLt2C8tXS-66" value="返回已有全局房间服务器列表" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;" parent="1" edge="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="548" y="220" as="sourcePoint" />
-            <mxPoint x="360" y="220" as="targetPoint" />
+            <mxPoint x="540" y="247" as="sourcePoint" />
+            <mxPoint x="360" y="247" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
         <mxCell id="7baba1c4bc27f4b0-13" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;" parent="1" vertex="1">
           <mxGeometry x="350" y="155" width="10" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="V6cwjawZBJKuY5wKBzn6-1" value="" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.5;exitY=0.068;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" target="7baba1c4bc27f4b0-13">
+        <mxCell id="V6cwjawZBJKuY5wKBzn6-1" value="" style="html=1;verticalAlign=bottom;endArrow=block;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;edgeStyle=elbowEdgeStyle;elbow=vertical;exitX=0.5;exitY=0.068;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="150" y="184" as="sourcePoint" />
-            <mxPoint x="549.5" y="170" as="targetPoint" />
+            <mxPoint x="150" y="183" as="sourcePoint" />
+            <mxPoint x="350" y="183" as="targetPoint" />
             <Array as="points" />
           </mxGeometry>
         </mxCell>
         <mxCell id="V6cwjawZBJKuY5wKBzn6-2" value="客户端获取全局房间服务器列表" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="V6cwjawZBJKuY5wKBzn6-1">
           <mxGeometry x="-0.1276" y="1" relative="1" as="geometry">
-            <mxPoint x="1" y="-10.08" as="offset" />
+            <mxPoint x="1" y="-11.08" as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
